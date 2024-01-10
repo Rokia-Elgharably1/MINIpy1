@@ -1,0 +1,86 @@
+# genrate a random number
+import random # import the random module (which allows you to genrate the random numbers)
+
+def roll(): # defining a function named roll
+     min_value = 1
+     max_value = 6
+     roll = random.randint(min_value, max_value)
+     
+     
+     return roll # will give how ever called the function the "roll" value back
+ 
+
+value = roll() # calling the function
+print(value) # prints the value for the roll funtion
+
+
+
+while True:
+    players = input('enter the number of players (2-4); ') # ask for the number of participates
+#the idea is that we are going to ask the users to give use the value between 1 to 4 and we need to check if that number is valid
+
+    if players.isdigit(): # the isdigit comand will tell us if that value is a whole number or not 
+        players = int(players)
+        if 2 <= players <= 4:
+            break # exits the while loop if the stament is true
+
+print(players)
+
+    #To avoid the program for crashing because of an invalid input we have to first checj if it's only consists of digits if yes we will convert it into an intger, if not we will ask you for another input.
+    
+
+# simulating each players turn
+max_score = 50
+player_scores = [0 for _ in range(players)] # we will have the list taht sores all the scores of the players. ( we will have this list to change size based on how many players have)
+
+
+# 0 for _ in range(players) => this is a list compresention. This puts a zero inside of the list for every single player we have. Instead of the under score we code put 'i', but I don;t actually acre about what teh variable is I just do this the number of players times, hence the underscore.
+#it will loop the number of layers that we have.
+#range(players) creates an iterable that goes from 0 to players - 1. It represents the indices of the list.
+# The list comprehension [0 for _ in range(players)] creates a list where each element is 0. The use of _ is a convention in Python to indicate that the variable is not going to be used in the loop. So, for each index in the range, the corresponding element in the list will be 0.
+
+
+while max(player_scores) < max_score: # max command will gives us the maximuim value from this array/list.
+   
+
+    for player_idx in range (players): # to account for multiple players (in this loop we will stimulate one persons entire turn)
+        print('\nplayer',player_idx+1, ' turn has started!\n')
+        print(' your total score id:', player_scores[player_idx], '\n')
+        
+        current_score = 0 # to keep track of the score
+        
+       
+        while True: # will keep going until the players stops there turn.
+            should_roll = input('would you like to roll (y)? ') # I added y cause I need the user to input the key y = yes
+             
+           #if should_roll.lower() == 'y': # .lower is used so if they enter a capital why the program will comvert it into a lower case y and the progrm will still run.
+                 #value = roll()
+                 
+            #else:
+                #break 
+                
+            # another way of doing this: 
+            if should_roll.lower() != 'y': # .lower is used so if they enter a capital why the program will comvert it into a lower case y and the progrm will still run.
+                break   
+        
+            value = roll()
+          
+            if value == 1:
+                print('turn done')
+            else: 
+                current_score += value
+                print("you rolled a: ", value)
+            
+            print("your current score is: ", current_score)
+    
+        player_scores[player_idx] += current_score # current score is per turn and here is the total score that we will be adding here once they finish there turn.
+        print('score is:', player_scores[player_idx])
+        
+# loops through the number of players, shows whos turns it is, we set the score = 0 for each turn, then simulate the turn ( ask if they want to roll if not we will break out of the while loop, if they rolled a 1 score will be zero ad we will break out of the loop, otherwise we add the value that they rolled to the currnt score)
+
+# tells who wins
+max_score = max(player_scores)
+winning_idx = player_scores.idex(max_score)
+print('player number', winning_idx +1 ,
+      "is the winner with a score of:', max_score")
+
